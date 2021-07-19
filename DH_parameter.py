@@ -61,23 +61,41 @@ class Matrix(object):
     def set_row(self, next_row):
         self.matrix = np.dot(next_row, self.matrix)
 
-
-
 l=[]
-c=int(input("Enter DOF:"))
-for i in range(0,c+1):
-    l.insert(i,Matrix())
-for i in range(1,c+1):
-    print("Row {0}".format(i))
-    q1=float(input("\tEnter theta(in degrees): "))
-    l[i].set_theta(q1)
-    d=float(input("\tEnter d: "))
-    l[i].set_d(d)
-    a=float(input("\tEnter a: "))
-    l[i].set_a(a)
-    q2=float(input("\tEnter alpha(in degrees): "))
-    l[i].set_alpha(q2)
-    l[i].set_row(l[i-1].get())
+ch=int(input("Choose:\n  1. Read from file\n  2. Enter data Manually"))
+if ch==1:
+    f = open("DH_Table.txt",'r')
+    c = int(f.readline())
+    for i in range(0,c+1):
+        l.insert(i,Matrix())
+    for i in range(1,c+1):
+        print("Row {0}".format(i))
+        q1= float(f.readline())
+        l[i].set_theta(q1)
+        d= float(f.readline())
+        l[i].set_d(d)
+        a= float(f.readline())
+        l[i].set_a(a)
+        q2= float(f.readline())
+        l[i].set_alpha(q2)
+        l[i].set_row(l[i-1].get())
+    f.close()
+    pass
+else:
+    c=int(input("Enter DOF:"))
+    for i in range(0,c+1):
+        l.insert(i,Matrix())
+    for i in range(1,c+1):
+        print("Row {0}".format(i))
+        q1=float(input("\tEnter theta(in degrees): "))
+        l[i].set_theta(q1)
+        d=float(input("\tEnter d: "))
+        l[i].set_d(d)
+        a=float(input("\tEnter a: "))
+        l[i].set_a(a)
+        q2=float(input("\tEnter alpha(in degrees): "))
+        l[i].set_alpha(q2)
+        l[i].set_row(l[i-1].get())
 
 # oordinates X Y Z for plotting
 X=[]
