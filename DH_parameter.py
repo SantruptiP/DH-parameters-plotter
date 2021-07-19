@@ -1,8 +1,9 @@
+from math import radians, sin, cos
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
-from math import radians, sin, cos
+
 
 class Matrix(object):
 
@@ -34,12 +35,12 @@ class Matrix(object):
         rot_z[1, 0] = sin(radians(rot_about_Z))
         rot_z[1, 1] = cos(radians(rot_about_Z))
 
-        self.matrix = np.dot(self.matrix,rot_z)
+        self.matrix = np.dot(self.matrix, rot_z)
 
-    def set_a(self, a):
+    def set_a(self, A):
         # sets the a parameter
-        dist_x=np.identity(4)
-        dist_x[0,3] = a
+        dist_x = np.identity(4)
+        dist_x[0, 3] = A
         self.matrix = np.dot(self.matrix, dist_x)
         #self.matrix[0, 3] = a
 
@@ -48,10 +49,10 @@ class Matrix(object):
         # sets the alpha parameter
         self.x_axis(alpha)
 
-    def set_d(self, d):
+    def set_d(self, D):
         # sets the d parameter
 
-        self.matrix[2, 3] = d
+        self.matrix[2, 3] = D
 
     def set_theta(self, theta):
         # sets the theta parameter
@@ -61,60 +62,60 @@ class Matrix(object):
     def set_row(self, next_row):
         self.matrix = np.dot(next_row, self.matrix)
 
-l=[]
-ch=int(input("Choose:\n  1. Read from file\n  2. Enter data Manually"))
-if ch==1:
-    f = open("DH_Table.txt",'r')
-    c = int(f.readline())
-    for i in range(0,c+1):
-        l.insert(i,Matrix())
-    for i in range(1,c+1):
-        print("Row {0}".format(i))
-        q1= float(f.readline())
-        l[i].set_theta(q1)
-        d= float(f.readline())
-        l[i].set_d(d)
-        a= float(f.readline())
-        l[i].set_a(a)
-        q2= float(f.readline())
-        l[i].set_alpha(q2)
-        l[i].set_row(l[i-1].get())
-    f.close()
-    pass
-else:
-    c=int(input("Enter DOF:"))
-    for i in range(0,c+1):
-        l.insert(i,Matrix())
-    for i in range(1,c+1):
-        print("Row {0}".format(i))
-        q1=float(input("\tEnter theta(in degrees): "))
-        l[i].set_theta(q1)
-        d=float(input("\tEnter d: "))
-        l[i].set_d(d)
-        a=float(input("\tEnter a: "))
-        l[i].set_a(a)
-        q2=float(input("\tEnter alpha(in degrees): "))
-        l[i].set_alpha(q2)
-        l[i].set_row(l[i-1].get())
+L = []
+CH = int(input("Choose:\n  1. Read from file\n  2. Enter data Manually"))
+if CH == 1:
+    F = open("DH_Table.txt", 'r')
+    C = int(F.readline())
+    for i in range(0, C+1):
+        L.insert(i, Matrix())
+    for i in range(1, C+1):
+        print "Row {0}".format(i)
+        q1 = float(F.readline())
+        L[i].set_theta(q1)
+        D = float(F.readline())
+        L[i].set_d(D)
+        A = float(F.readline())
+        L[i].set_a(A)
+        q2 = float(F.readline())
+        L[i].set_alpha(q2)
+        L[i].set_row(L[i-1].get())
+    F.close()
 
-# oordinates X Y Z for plotting
-X=[]
-Y=[]
-Z=[]
-for i in range(0,c+1):
-    a=l[i]
-    X.insert(i,a[0,3])
-    Y.insert(i,a[1,3])
-    Z.insert(i,a[2,3])
-print("End effector coordinates are:")
-print("x-coordinate: {0}".format(X[c]))
-print("y-coordinate: {0}".format(Y[c]))
-print("z-coordinate: {0}".format(Z[c]))
+else:
+    C = int(input("Enter DOF:"))
+    for i in range(0, C+1):
+        L.insert(i, Matrix())
+    for i in range(1, C+1):
+        print "Row {0}".format(i)
+        q1 = float(input("\tEnter theta(in degrees): "))
+        L[i].set_theta(q1)
+        D = float(input("\tEnter d: "))
+        L[i].set_d(D)
+        A = float(input("\tEnter a: "))
+        L[i].set_a(A)
+        q2 = float(input("\tEnter alpha(in degrees): "))
+        L[i].set_alpha(q2)
+        L[i].set_row(L[i-1].get())
+
+# coordinates X Y Z for plotting
+X = []
+Y = []
+Z = []
+for i in range(0, C+1):
+    A = L[i]
+    X.insert(i, A[0, 3])
+    Y.insert(i, A[1, 3])
+    Z.insert(i, A[2, 3])
+print "End effector coordinates are:"
+print "x-coordinate: {0}".format(X[C])
+print "y-coordinate: {0}".format(Y[C])
+print "z-coordinate: {0}".format(Z[C])
 # Plot
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-ax.plot_wireframe(X,Y,Z)
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-ax.set_zlabel('z')
+FIG = plt.figure()
+AX = FIG.add_subplot(111, projection='3d')
+AX.plot_wireframe(X, Y, Z)
+AX.set_xlabel('x')
+AX.set_ylabel('y')
+AX.set_zlabel('z')
 plt.show()
