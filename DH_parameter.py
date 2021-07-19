@@ -61,50 +61,7 @@ class Matrix(object):
     def set_row(self, next_row):
         self.matrix = np.dot(next_row, self.matrix)
 
-#import GUI
-'''from tkinter import *
-root=Tk()
-# =============================================================================
-# creation of table
-# =============================================================================
-def r_input():
-    inpt=int(textBox.get("0.0","end"))
-    x=inpt+10
-    rows=[]
-    for i in range(0,inpt):
 
-        cols=[]
-        for j in range(4):
-           table = Entry(relief=SUNKEN)
-
-           table.grid(row=i+1, column=j, sticky=NSEW)
-           table.insert(END, '%d' % (0))
-           cols.append(table)
-        rows.append(cols)
-    def CLICK():
-        for row in rows:
-            l=[]
-            for col in row:
-               getdata=textData.get("0.0","end")
-               l.append(col.get())
-            print(l)
-
-    textData=Text(root,height=2,width=10)
-    textData.grid(row=x)
-    Button(text='OK',bg="grey",command=CLICK).grid(row=x)
-
-
-# =============================================================================
-#ENTERING VALUE FOR DOF
-# =============================================================================
-
-label=Label(root,text="ENTER DOF",fg="black",bg="grey")
-label.grid(row=0)
-textBox=Text(root,height=2,width=10)
-textBox.grid(row=1)
-ok=Button(root,height=1,width=10,text="OK",fg="black",bg="grey",command=r_input)
-ok.grid(row=2)
-root.mainloop()'''
 
 l=[]
 c=int(input("Enter DOF:"))
